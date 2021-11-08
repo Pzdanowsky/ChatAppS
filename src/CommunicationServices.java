@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.Random;
 
 public class CommunicationServices {
 
@@ -8,11 +9,20 @@ public class CommunicationServices {
    private static Socket clientSocket;
 
 
-    public static void recive(ObjectInputStream objectIn) {
+    public static void recive(ObjectInputStream objectIn,User user) {
             //ObjectData obj = new ObjectData();
         try {
             objectDataRecive = (ObjectData) objectIn.readObject();
-            System.out.println(objectDataRecive.getData());
+            //System.out.println(objectDataRecive.getData());
+
+            if (objectDataRecive.getSessionNumber().contains("00000")) {
+                user = new User(objectDataRecive.getUsername());
+                UserRepository.getInstance().addUser(objectDataRecive.getSessionNumber(),user );
+                Random rn = new Random();
+                String s = String.valueOf(rn.nextInt(10) + 1);
+                user.setTag(s);
+            }
+
             DataReciveRepository.getInstance().addDataRecive(objectDataRecive);
             objectDataRecive = null;
 

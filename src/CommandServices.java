@@ -4,20 +4,17 @@ public class CommandServices {
 
     private static ObjectData decision;
 
-    public static void decision(int i) {
-        ObjectData recive = new ObjectData();
-        decision = DataReciveRepository.getInstance().getObjectData("zdanek");
+    public static void decision(User user) {
+        ObjectData send = new ObjectData();
+        decision = DataReciveRepository.getInstance().getObjectData(user.getUsername());
         if (decision.getData().equals("exit")) {
             System.out.println("Wychodizmy nauuura");
-            recive.setData("kończe");
-            recive.setDataType("serwer");
+            send.setData("kończe");
+            send.setDataType("serwer");
 
-        } else {
-
-            recive.setData("czekam"+i);
-            recive.setDataType("serwer");
         }
+        send.setData(decision.getData());
         //System.out.println(decision.getData());
-        DataSendRepository.getInstance().addDataSend(recive);
+        DataSendRepository.getInstance().addDataSend(send);
     }
 }

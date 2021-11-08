@@ -15,6 +15,7 @@ public class ClientHandler extends Thread {
 
     private ObjectData objectDataRecive;
 
+    private User user;
 
     ClientHandler(Socket clientSocket) throws IOException {
     this.clientSocket = clientSocket;
@@ -29,8 +30,8 @@ public class ClientHandler extends Thread {
         int i=0;
         while(true){
             i++;
-            CommunicationServices.recive(objectIn);
-            CommandServices.decision(i);
+            CommunicationServices.recive(objectIn,user);
+            CommandServices.decision(user);
             CommunicationServices.send(objectOut);
 
         }

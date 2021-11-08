@@ -22,7 +22,7 @@ public class DataReciveRepository {
    }
 
    public void addDataRecive(ObjectData objectDataRecive){
-        reciveList.put(objectDataRecive.getDataType(),objectDataRecive);
+        reciveList.put(objectDataRecive.getUsername(),objectDataRecive);
    }
 
    public ObjectData getObjectData(String dataType){

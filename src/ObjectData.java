@@ -3,8 +3,8 @@ import java.io.Serializable;
 public class ObjectData implements Serializable {
 
     public static final long serialVersionUID = 1L;
-    private int sessionNumber;
-    private String sesionPassword;
+    private String sessionNumber;
+    private String username;
     private String command;
     private String dataType;
     private String data;
@@ -13,20 +13,20 @@ public class ObjectData implements Serializable {
     public ObjectData() {
     }
 
-    public int getSessionNumber() {
+    public String getSessionNumber() {
         return sessionNumber;
     }
 
-    public void setSessionNumber(int sessionNumber) {
+    public void setSessionNumber(String sessionNumber) {
         this.sessionNumber = sessionNumber;
     }
 
-    public String getSesionPassword() {
-        return sesionPassword;
+    public String getUsername() {
+        return username;
     }
 
-    public void setSesionPassword(String sesionPassword) {
-        this.sesionPassword = sesionPassword;
+    public void setSUsername(String sesionPassword) {
+        this.username = username;
     }
 
     public String getCommand() {
