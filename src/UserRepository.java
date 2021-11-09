@@ -26,8 +26,8 @@ public class UserRepository {
         userList.remove(sessionNumber);
     }
 
-    public User getUserSession(String sessionNumber){
-        return  userList.get(sessionNumber);
+    public User getUser(String sesionNumber){
+        return  userList.get(sesionNumber);
 
     }
 
@@ -48,7 +48,29 @@ public class UserRepository {
         }
     }
 
+    public User searchUser(ObjectData object) {
+        String username = object.getTo();
+        if (!userList.isEmpty()) {
+            for (Map.Entry<String, User> entry : userList.entrySet()) {
+                User userIter = entry.getValue();
+                if (userIter.getUsername().equals(username)) {
+                    System.out.println(userIter.getUsername()+ "serachUser");
+                    return userIter;
+
+                }
+            }
+        }
+        return null;
+    }
+
+    public void updateUser (User user) {
+        User u1 = userList.get(user.getSesionNumber());
+        System.out.println(u1.getUsername());
+    }
+
+
     public int getOnlineList(){
+        System.out.println(userList.size());
         return userList.size();
     }
 }

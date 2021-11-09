@@ -6,15 +6,29 @@ public class CommandServices {
 
     public static void decision(User user) {
         ObjectData send = new ObjectData();
-        decision = DataReciveRepository.getInstance().getObjectData(user.getUsername());
-        if (decision.getData().equals("exit")) {
-            System.out.println("Wychodizmy nauuura");
-            send.setData("kończe");
-            send.setDataType("serwer");
+        decision = DataReciveRepository.getInstance().getObjectData(user.getSesionNumber());
+        //UserRepository.getInstance().updateUser(user);
 
-        }
-        send.setData(decision.getData());
-        //System.out.println(decision.getData());
+        //if(decision.getCommand().equals("message")){
+            send.setTo(decision.getTo());
+            if(decision.getData() == null) {
+                send.setData("empty");
+            }else{
+                send.setData(decision.getData());
+            }
+
+            String adres = decision.getTo();
+        System.out.println(adres);
+             User useReciver = UserRepository.getInstance().searchUser(decision);
+
+           if(useReciver == null){
+                System.out.println("dupa");
+            }else{
+                System.out.println("Mom co do "+ useReciver.getUsername()+ " od "+user.getUsername());
+               send.setSesionToken(useReciver.getSesionToken());
+               send.setSessionNumber(useReciver.getSesionNumber());
+            }
+
         DataSendRepository.getInstance().addDataSend(send);
     }
 }

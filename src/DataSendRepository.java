@@ -20,12 +20,12 @@ public class DataSendRepository {
     }
 
     public void addDataSend(ObjectData objectDataSend) {
-        sendList.put(objectDataSend.getDataType(), objectDataSend);
+        sendList.put(objectDataSend.getSessionNumber(), objectDataSend);
     }
 
-    public ObjectData getObjectData(String dataType) {
-        ObjectData obj = sendList.get(dataType);
-        sendList.remove(dataType);
+    public ObjectData getObjectData(String sessionNumber) {
+        ObjectData obj = sendList.get(sessionNumber);
+        sendList.remove(sessionNumber);
         return obj;
     }
 

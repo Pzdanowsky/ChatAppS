@@ -5,7 +5,7 @@ import java.util.Map;
 public class DataReciveRepository {
 
     private static DataReciveRepository instance;
-    private static Map<String,ObjectData> reciveList;
+    private static Map<String,ObjectData> reciveList; //Map<objectDataRecive.getTo(), ObjectData>
 
 
 
@@ -22,12 +22,12 @@ public class DataReciveRepository {
    }
 
    public void addDataRecive(ObjectData objectDataRecive){
-        reciveList.put(objectDataRecive.getUsername(),objectDataRecive);
+        reciveList.put(objectDataRecive.getSessionNumber(),objectDataRecive);
    }
 
-   public ObjectData getObjectData(String dataType){
-        ObjectData obj = reciveList.get(dataType);
-        reciveList.remove(dataType);
+   public ObjectData getObjectData(String sessionNumber){
+        ObjectData obj = reciveList.get(sessionNumber);
+        reciveList.remove(sessionNumber);
         return obj;
    }
 
