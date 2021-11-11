@@ -1,11 +1,12 @@
-import java.util.ArrayList;
+import Objects.ObjectData;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataReciveRepository {
 
     private static DataReciveRepository instance;
-    private static Map<String,ObjectData> reciveList; //Map<objectDataRecive.getTo(), ObjectData>
+    private static Map<String, ObjectData> reciveList; //Map<objectDataRecive.getTo(), Objects.ObjectData>
 
 
 

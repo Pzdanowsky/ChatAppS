@@ -1,3 +1,6 @@
+package Objects;
+
+import java.io.File;
 import java.io.Serializable;
 
 public class ObjectData implements Serializable {
@@ -7,10 +10,9 @@ public class ObjectData implements Serializable {
     private String sesionToken ; // Session password
     private String username; // Login
     private String command; // Logowanie, Wysłanie wiadomosci, Wysyłanie pliku
-    private String from; //FROM USER
-    private String to; // TO USER OR TO SERWER
     private String dataType; //MESSAGE, FILE
-    private String data; // DATA example: password, message text,
+    private MessageObject messageObject;
+    private FileObject fileObject;
 
 
     public ObjectData() {
@@ -48,14 +50,6 @@ public class ObjectData implements Serializable {
         this.dataType = dataType;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
     public String getSesionToken() {
         return sesionToken;
     }
@@ -64,19 +58,19 @@ public class ObjectData implements Serializable {
         this.sesionToken = sesionToken;
     }
 
-    public String getFrom() {
-        return from;
+    public MessageObject getMessageObject() {
+        return messageObject;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setMessageObject(MessageObject messageObject) {
+        this.messageObject = messageObject;
     }
 
-    public String getTo() {
-        return this.to;
+    public FileObject getFileObject() {
+        return fileObject;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setFileObject(FileObject fileObject) {
+        this.fileObject = fileObject;
     }
 }

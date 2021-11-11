@@ -1,8 +1,9 @@
+import Objects.ObjectData;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Random;
 
 public class ClientHandler extends Thread {
 
@@ -42,15 +43,15 @@ public class ClientHandler extends Thread {
                 }
             }
         }
-        //ComClientService con = new ComClientService(objectIn,objectOut,sessionNumber);
-        //con.start();
+        ComClientService con = new ComClientService(objectIn,objectOut,sessionNumber,clientSocket);
+        con.start();
         int i=0;
         while(true){
             i++;
            CommunicationServices.recive(objectIn,UserRepository.getInstance().getUser(sessionNumber));
             CommandServices.decision(UserRepository.getInstance().getUser(sessionNumber));
-           CommunicationServices.send(objectOut,UserRepository.getInstance().getUser(sessionNumber));
-
+           //CommunicationServices.send(objectOut,UserRepository.getInstance().getUser(sessionNumber));
+            System.out.println(i);
         }
 
 

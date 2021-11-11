@@ -1,3 +1,5 @@
+import Objects.ObjectData;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ public class UserRepository {
 
     private Map<String, User> userList;
 
-    public static synchronized UserRepository getInstance(){
+    public static UserRepository getInstance(){
         if(instance == null){
             instance = new UserRepository();
         }
@@ -49,12 +51,12 @@ public class UserRepository {
     }
 
     public User searchUser(ObjectData object) {
-        String username = object.getTo();
+        String username = object.getMessageObject().getToMessage();
         if (!userList.isEmpty()) {
             for (Map.Entry<String, User> entry : userList.entrySet()) {
                 User userIter = entry.getValue();
                 if (userIter.getUsername().equals(username)) {
-                    System.out.println(userIter.getUsername()+ "serachUser");
+                    //System.out.println(userIter.getUsername()+ "serachUser");
                     return userIter;
 
                 }

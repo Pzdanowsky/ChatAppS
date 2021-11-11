@@ -1,3 +1,5 @@
+import Objects.ObjectData;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ public class DataSendRepository {
     private static Map<String, ObjectData> sendList;
 
 
-    public static DataSendRepository getInstance() {
+    public synchronized static DataSendRepository getInstance() {
         if (instance == null) {
             instance = new DataSendRepository();
         }
@@ -24,9 +26,13 @@ public class DataSendRepository {
     }
 
     public ObjectData getObjectData(String sessionNumber) {
-        ObjectData obj = sendList.get(sessionNumber);
-        sendList.remove(sessionNumber);
-        return obj;
+        if(!sendList.isEmpty()) {
+            ObjectData obj = sendList.get(sessionNumber);
+            sendList.remove(sessionNumber);
+            return obj;
+        }else {
+            return null;
+        }
     }
 
 }

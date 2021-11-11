@@ -1,21 +1,21 @@
+import Objects.ObjectData;
+
 import java.io.*;
 import java.net.*;
-import java.util.Random;
 
 public class CommunicationServices {
 
    private static ObjectData objectDataRecive;
    private static ObjectData objectDataSend;
    private static Socket clientSocket;
+   private static int i = 0;
 
 
     public static void recive(ObjectInputStream objectIn,User user) {
 
         try {
             objectDataRecive = (ObjectData) objectIn.readObject();
-
-
-            if(objectDataRecive !=null) {
+             if(objectDataRecive !=null) {
                 if(!checkUserData(objectDataRecive,user)) {
                     objectDataRecive.setSessionNumber(user.getSesionNumber());
                     objectDataRecive.setSesionToken(user.getSesionToken());
@@ -40,11 +40,11 @@ public class CommunicationServices {
     public static void send(ObjectOutputStream objectOut, User user){
        objectDataSend = DataSendRepository.getInstance().getObjectData(user.getSesionNumber());
        if(objectDataSend == null){
-          // System.out.println("Pusty");
+           System.out.println("Pusto mordo");
        }else {
            try {
 
-               System.out.println("Send: "+ objectDataSend.getData());
+              // System.out.println("Send: "+ objectDataSend.getData());
                objectOut.writeObject(objectDataSend);
                objectOut.reset();
                //System.out.println(objectDataSend.getData());
