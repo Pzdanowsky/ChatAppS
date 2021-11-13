@@ -1,4 +1,9 @@
+package Services;
+
 import Objects.ObjectData;
+import Objects.User;
+import Repositories.DataReciveRepository;
+import Repositories.DataSendRepository;
 
 import java.io.*;
 import java.net.*;
@@ -11,18 +16,17 @@ public class CommunicationServices {
    private static int i = 0;
 
 
-    public static void recive(ObjectInputStream objectIn,User user) {
+    public static void recive(ObjectInputStream objectIn, User user) {
 
         try {
             objectDataRecive = (ObjectData) objectIn.readObject();
              if(objectDataRecive !=null) {
-                if(!checkUserData(objectDataRecive,user)) {
-                    objectDataRecive.setSessionNumber(user.getSesionNumber());
-                    objectDataRecive.setSesionToken(user.getSesionToken());
-                    user.setUsername(objectDataRecive.getUsername());
-                   //UserRepository.getInstance().updateUser(user);
 
-                }
+                    objectDataRecive.setSessionNumber(user.getSesionNumber());
+                   // objectDataRecive.setSesionToken(user.getSesionToken());
+                    //user.setUsername(objectDataRecive.getUsername());
+                   //Repositories.UserRepository.getInstance().updateUser(user);
+
 
                 DataReciveRepository.getInstance().addDataRecive(objectDataRecive);
                 objectDataRecive = null;

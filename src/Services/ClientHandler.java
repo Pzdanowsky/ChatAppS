@@ -1,4 +1,8 @@
+package Services;
+
 import Objects.ObjectData;
+import Objects.User;
+import Repositories.UserRepository;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,7 +25,7 @@ public class ClientHandler extends Thread {
 
     private String sessionNumber, sessionToken;
 
-    ClientHandler(Socket clientSocket) throws IOException {
+    public ClientHandler(Socket clientSocket) throws IOException {
     this.clientSocket = clientSocket;
     this.objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
     this.objectIn = new ObjectInputStream(clientSocket.getInputStream());
@@ -36,7 +40,7 @@ public class ClientHandler extends Thread {
             while(true) {
                 boolean checkGenerator = UserRepository.getInstance().searchEquals(sessionNumber = SessionGenerator.getSesionNumber());
                 if(!checkGenerator){
-                    user.setSesionToken(SessionGenerator.getSessionToken());;
+                   // user.setSesionToken(SessionGenerator.getSessionToken());;
                     user.setSesionNumber(sessionNumber);
                     UserRepository.getInstance().addUser(sessionNumber,user);
                     break;
@@ -49,8 +53,9 @@ public class ClientHandler extends Thread {
         while(true){
             i++;
            CommunicationServices.recive(objectIn,UserRepository.getInstance().getUser(sessionNumber));
-            CommandServices.decision(UserRepository.getInstance().getUser(sessionNumber));
-           //CommunicationServices.send(objectOut,UserRepository.getInstance().getUser(sessionNumber));
+           CommandManager.manage(user);
+            //ManagerLast.decision(UserRepository.getInstance().getUser(sessionNumber));
+
             System.out.println(i);
         }
 

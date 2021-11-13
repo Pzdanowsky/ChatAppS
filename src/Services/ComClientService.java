@@ -1,9 +1,12 @@
+package Services;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import Objects.ObjectData;
+import Repositories.DataSendRepository;
 
 public class ComClientService extends Thread{
 

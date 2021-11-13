@@ -1,5 +1,12 @@
+import Services.ClientHandler;
+import Services.DatabaseConnectionService;
+
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main {
@@ -10,11 +17,9 @@ public class Main {
     private static ArrayList<ClientHandler> clientsList = new ArrayList<>();
 
 
-
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
 
         System.out.println("Server started");
-
 
         try{
             ServerSocket listener =  new ServerSocket(PORT);

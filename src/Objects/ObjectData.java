@@ -8,7 +8,10 @@ public class ObjectData implements Serializable {
     public static final long serialVersionUID = 1L;
     private String sessionNumber; // Uni session number
     private String sesionToken ; // Session password
-    private String username; // Login
+    private String username; // Login`
+    private boolean authenticated;
+    private int userID;
+    private String password;
     private String command; // Logowanie, Wysłanie wiadomosci, Wysyłanie pliku
     private String dataType; //MESSAGE, FILE
     private MessageObject messageObject;
@@ -72,5 +75,29 @@ public class ObjectData implements Serializable {
 
     public void setFileObject(FileObject fileObject) {
         this.fileObject = fileObject;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }

@@ -1,9 +1,13 @@
+package Services;
+
 import Objects.MessageObject;
 import Objects.ObjectData;
+import Objects.User;
+import Repositories.DataReciveRepository;
+import Repositories.DataSendRepository;
+import Repositories.UserRepository;
 
-import java.io.File;
-
-public class CommandServices {
+public class ManagerLast {
 
     private static ObjectData decision;
     private static int i = 0;
@@ -12,7 +16,7 @@ public class CommandServices {
 
         ObjectData send = new ObjectData();
         decision = DataReciveRepository.getInstance().getObjectData(user.getSesionNumber());
-        //UserRepository.getInstance().updateUser(user);
+        //Repositories.UserRepository.getInstance().updateUser(user);
         if(decision != null) {
 
             if(decision.getCommand().equals("message")) {
@@ -66,7 +70,7 @@ public class CommandServices {
                 DataSendRepository.getInstance().addDataSend(send);
 
             }
-           // DataSendRepository.getInstance().addDataSend(send);
+           // Repositories.DataSendRepository.getInstance().addDataSend(send);
         }else{
             i++;
             System.out.println("morda");
