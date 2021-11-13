@@ -25,8 +25,7 @@ public class CommandManager {
                     System.out.println("Logowanie");
                     break;
 
-                case "00010":
-                    //Rejestracja
+                case "00010":strategy = new RegisterRequestService();
                     break;
 
                 case "00011":
@@ -34,7 +33,7 @@ public class CommandManager {
                     break;
 
                 case "00100":
-                    // Wyjscie - wylogowanie
+                 //   strategy = new MessageRequestService();
                     break;
 
                 case "00101":

@@ -18,7 +18,6 @@ public class LoginRequestService implements RequestStrategy {
 
     private static User user;
 
-    //private static ObjectData objectData;
     private ObjectData objectData;
 
 
@@ -26,9 +25,6 @@ public class LoginRequestService implements RequestStrategy {
     public ObjectData processObjectData(User user, ObjectData objectData) {
 
         ObjectData objectDataSend = new ObjectData();
-
-
-
         objectDataSend.setSessionNumber(user.getSesionNumber());
         objectDataSend.setCommand("00001");
         if(objectData == null){
@@ -57,7 +53,7 @@ public class LoginRequestService implements RequestStrategy {
                     objectDataSend.setAuthenticated(true);
                     objectDataSend.setUserID(myRs.getInt(1));
                     objectDataSend.setUsername(user.getUsername());
-                    System.out.println("Zalogowano kurwa");
+                   // System.out.println("Zalogowano kurwa");
                 }
 
             }catch (SQLException ex){

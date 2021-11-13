@@ -12,6 +12,9 @@ public class ObjectData implements Serializable {
     private boolean authenticated;
     private int userID;
     private String password;
+    private String nameUser;
+    private String surnameUser;
+    private String emailUser;
     private String command; // Logowanie, Wysłanie wiadomosci, Wysyłanie pliku
     private String dataType; //MESSAGE, FILE
     private MessageObject messageObject;
@@ -99,5 +102,29 @@ public class ObjectData implements Serializable {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public String getSurnameUser() {
+        return surnameUser;
+    }
+
+    public void setSurnameUser(String surnameUser) {
+        this.surnameUser = surnameUser;
+    }
+
+    public String getEmailUser() {
+        return emailUser;
+    }
+
+    public void setEmailUser(String emailUser) {
+        this.emailUser = emailUser;
     }
 }
