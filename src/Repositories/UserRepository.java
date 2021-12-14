@@ -1,7 +1,7 @@
 package Repositories;
 
 import Objects.ObjectData;
-import Objects.User;
+import Objects.UserData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ public class UserRepository {
 
     private static UserRepository instance = null;
 
-    private Map<String, User> userList;
+    private Map<String, UserData> userList;
 
     public static UserRepository getInstance(){
         if(instance == null){
@@ -23,15 +23,15 @@ public class UserRepository {
         userList = new HashMap<>();
     }
 
-    public void addUser(String sessionNumber, User user){
-        userList.put(sessionNumber,user);
+    public void addUser(String sessionNumber, UserData userData){
+        userList.put(sessionNumber, userData);
     }
 
     public void deleteUser(String sessionNumber){
         userList.remove(sessionNumber);
     }
 
-    public User getUser(String sesionNumber){
+    public UserData getUser(String sesionNumber){
         return  userList.get(sesionNumber);
 
     }
@@ -53,14 +53,14 @@ public class UserRepository {
         }
     }
 
-    public User searchUser(ObjectData object) {
+    public UserData searchUser(ObjectData object) {
         String username = object.getMessageObject().getToMessage();
         if (!userList.isEmpty()) {
-            for (Map.Entry<String, User> entry : userList.entrySet()) {
-                User userIter = entry.getValue();
-                if (userIter.getUsername().equals(username)) {
+            for (Map.Entry<String, UserData> entry : userList.entrySet()) {
+                UserData userDataIter = entry.getValue();
+                if (userDataIter.getUsername().equals(username)) {
                     //System.out.println(userIter.getUsername()+ "serachUser");
-                    return userIter;
+                    return userDataIter;
 
                 }
             }
@@ -68,8 +68,8 @@ public class UserRepository {
         return null;
     }
 
-    public void updateUser (User user) {
-        User u1 = userList.get(user.getSesionNumber());
+    public void updateUser (UserData userData) {
+        UserData u1 = userList.get(userData.getSessionNumber());
         System.out.println(u1.getUsername());
     }
 

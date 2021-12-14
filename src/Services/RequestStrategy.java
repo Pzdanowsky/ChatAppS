@@ -2,11 +2,9 @@ package Services;
 
 
 import Objects.ObjectData;
-import Objects.User;
+import Objects.UserData;
 
 public interface RequestStrategy {
 
-
-
-    public ObjectData processObjectData(User user, ObjectData objectData);
+    public ObjectData processObjectData(UserData userData, ObjectData objectData);
 }

@@ -25,7 +25,7 @@ public class DataReciveRepository {
    }
 
    public void addDataRecive(ObjectData objectDataRecive){
-        reciveList.put(objectDataRecive.getSessionNumber(),objectDataRecive);
+        reciveList.put(objectDataRecive.getUserData().getSessionNumber(),objectDataRecive);
    }
 
    public ObjectData getObjectData(String sessionNumber){

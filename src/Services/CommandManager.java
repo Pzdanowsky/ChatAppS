@@ -1,7 +1,7 @@
 package Services;
 
 import Objects.ObjectData;
-import Objects.User;
+import Objects.UserData;
 import Repositories.DataReciveRepository;
 import Repositories.DataSendRepository;
 
@@ -10,9 +10,9 @@ public class CommandManager {
     private static ObjectData objectDataRecive;
     private static RequestStrategy strategy;
 
-    public static void manage(User user){
+    public static void manage(UserData userData){
 
-        objectDataRecive = DataReciveRepository.getInstance().getObjectData(user.getSesionNumber());
+        objectDataRecive = DataReciveRepository.getInstance().getObjectData(userData.getSessionNumber());
         if(objectDataRecive == null)
         {
             System.out.println("Pakiet przyszedł pusty");
@@ -25,7 +25,8 @@ public class CommandManager {
                     System.out.println("Logowanie");
                     break;
 
-                case "00010":strategy = new RegisterRequestService();
+                case "00010":
+                    strategy = new RegisterRequestService();
                     break;
 
                 case "00011":
@@ -41,7 +42,7 @@ public class CommandManager {
                     break;
 
                 case "00110":
-                    // Wysyłanie wiadomości
+                    strategy = new SearchUserRequestService();
                     break;
 
                 case "00111":
@@ -72,7 +73,7 @@ public class CommandManager {
 
             }
 
-            DataSendRepository.getInstance().addDataSend(strategy.processObjectData(user,objectDataRecive));
+            DataSendRepository.getInstance().addDataSend(strategy.processObjectData(userData,objectDataRecive));
         }
     }
 }

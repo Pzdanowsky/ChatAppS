@@ -1,7 +1,7 @@
 package Services;
 
 import Objects.ObjectData;
-import Objects.User;
+import Objects.UserData;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,24 +14,26 @@ public class RegisterRequestService implements RequestStrategy {
 
     private static Connection myConn;
 
-    private static User user;
+    private static UserData userData;
 
     @Override
-    public ObjectData processObjectData(User user, ObjectData objectData) {
+    public ObjectData processObjectData(UserData userData, ObjectData objectData) {
         ObjectData objectDataSend = new ObjectData();
+        UserData userDataSend = new UserData();
 
-        objectDataSend.setSessionNumber(user.getSesionNumber());
+        userDataSend.setSessionNumber(userData.getSessionNumber());
+
         objectDataSend.setCommand("00010");
         if(objectData == null) {
             System.out.println("Pusty obiekt");
             objectDataSend.setAuthenticated(false);
-        }else if(!objectData.getUsername().isEmpty() && !objectData.getPassword().isEmpty() && !objectData.getEmailUser().isEmpty() ){
+        }else if(!objectData.getUserData().getUsername().isEmpty() && !objectData.getUserData().getPassword().isEmpty() && !objectData.getUserData().getEmail().isEmpty() ){
 
             myConn = DatabaseConnectionService.getConn();
 
             try{
                 PreparedStatement pstat = myConn.prepareStatement("SELECT userID FROM users WHERE login =?");
-                pstat.setString(1,objectData.getUsername());
+                pstat.setString(1,objectData.getUserData().getUsername());
 
                 myRs = pstat.executeQuery();
 
@@ -43,28 +45,27 @@ public class RegisterRequestService implements RequestStrategy {
                     pstat.clearParameters();
                     String query = "INSERT INTO users (login,password,email,name,surname) VALUE(?,?,?,?,?)";
                     pstat = myConn.prepareStatement(query);
-                    pstat.setString(1,objectData.getUsername());
-                    pstat.setString(2,objectData.getPassword());
-                    pstat.setString(3,objectData.getEmailUser());
-                    pstat.setString(4, objectData.getNameUser());
-                    pstat.setString(5, objectData.getSurnameUser());
-
+                    pstat.setString(1,objectData.getUserData().getUsername());
+                    pstat.setString(2,objectData.getUserData().getPassword());
+                    pstat.setString(3,objectData.getUserData().getEmail());
+                    pstat.setString(4, objectData.getUserData().getNameUser());
+                    pstat.setString(5, objectData.getUserData().getSurname());
                     pstat.executeUpdate();
 
                     pstat.clearParameters();
                     pstat = myConn.prepareStatement("SELECT userID FROM users WHERE login =?");
-                    pstat.setString(1,objectData.getUsername());
+                    pstat.setString(1,objectData.getUserData().getUsername());
 
                     myRs = pstat.executeQuery();
 
                     if(myRs.next()){
                         System.out.println("Zarejestrowana");
-                        objectDataSend.setUserID(myRs.getInt(1));
-                        objectDataSend.setUsername(objectData.getUsername());
+                        objectDataSend.getUserData().setUserID(myRs.getInt(1));
+                        objectDataSend.getUserData().setUsername(objectData.getUserData().getUsername());
 
 
                     }else{
-                        objectDataSend.setUserID(0);
+                        objectDataSend.getUserData().setUserID(0);
                     }
 
                 }

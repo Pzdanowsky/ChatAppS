@@ -1,10 +1,8 @@
 package Services;
 
 import Objects.ObjectData;
-import Objects.User;
-import Repositories.DataReciveRepository;
+import Objects.UserData;
 
-import javax.imageio.IIOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,30 +14,32 @@ public class LoginRequestService implements RequestStrategy {
 
     private static Connection myConn;
 
-    private static User user;
+    private static UserData userData;
 
     private ObjectData objectData;
 
 
     @Override
-    public ObjectData processObjectData(User user, ObjectData objectData) {
+    public ObjectData processObjectData(UserData userData, ObjectData objectData) {
+        UserData sendUserData = new UserData();
 
         ObjectData objectDataSend = new ObjectData();
-        objectDataSend.setSessionNumber(user.getSesionNumber());
+        sendUserData.setSessionNumber(userData.getSessionNumber());
+
         objectDataSend.setCommand("00001");
         if(objectData == null){
             System.out.println("Pusty obiekt");
             objectDataSend.setAuthenticated(false);
 
-        }else if(!objectData.getUsername().isEmpty() && !objectData.getPassword().isEmpty() ){
+        }else if(!objectData.getUserData().getUsername().isEmpty() && !objectData.getUserData().getPassword().isEmpty() ){
 
 
 
             myConn = DatabaseConnectionService.getConn();
             try {
                 PreparedStatement pstat = myConn.prepareStatement("SELECT userID FROM users WHERE login =? AND password =?");
-                pstat.setString(1,objectData.getUsername());
-                pstat.setString(2,objectData.getPassword());
+                pstat.setString(1,objectData.getUserData().getUsername());
+                pstat.setString(2,objectData.getUserData().getPassword());
 
                 myRs = pstat.executeQuery();
 
@@ -47,13 +47,12 @@ public class LoginRequestService implements RequestStrategy {
                     objectDataSend.setAuthenticated(false);
                     System.out.println("Błedne dane");
                 }else{
-                    user.setUsername(objectData.getUsername());
-
-                    objectDataSend.setSesionToken(SessionGenerator.getSessionToken());
+                    userData.setUsername(objectData.getUserData().getUsername());
+                    sendUserData.setUsername(userData.getUsername());
+                    sendUserData.setSessionToken(SessionGenerator.getSessionToken());
                     objectDataSend.setAuthenticated(true);
-                    objectDataSend.setUserID(myRs.getInt(1));
-                    objectDataSend.setUsername(user.getUsername());
-                   // System.out.println("Zalogowano kurwa");
+                    sendUserData.setUserID(myRs.getInt(1));
+                    objectDataSend.setUserData(sendUserData);
                 }
 
             }catch (SQLException ex){

@@ -1,7 +1,7 @@
 package Services;
 
 import Objects.ObjectData;
-import Objects.User;
+import Objects.UserData;
 import Repositories.DataReciveRepository;
 import Repositories.DataSendRepository;
 
@@ -16,13 +16,13 @@ public class CommunicationServices {
    private static int i = 0;
 
 
-    public static void recive(ObjectInputStream objectIn, User user) {
+    public static void recive(ObjectInputStream objectIn, UserData userData) {
 
         try {
             objectDataRecive = (ObjectData) objectIn.readObject();
              if(objectDataRecive !=null) {
 
-                    objectDataRecive.setSessionNumber(user.getSesionNumber());
+                 objectDataRecive.getUserData().setSessionNumber(userData.getSessionNumber());
                    // objectDataRecive.setSesionToken(user.getSesionToken());
                     //user.setUsername(objectDataRecive.getUsername());
                    //Repositories.UserRepository.getInstance().updateUser(user);
@@ -41,8 +41,8 @@ public class CommunicationServices {
 
     }
 
-    public static void send(ObjectOutputStream objectOut, User user){
-       objectDataSend = DataSendRepository.getInstance().getObjectData(user.getSesionNumber());
+    public static void send(ObjectOutputStream objectOut, UserData userData){
+       objectDataSend = DataSendRepository.getInstance().getObjectData(userData.getSessionNumber());
        if(objectDataSend == null){
            System.out.println("Pusto mordo");
        }else {
@@ -60,11 +60,11 @@ public class CommunicationServices {
        }
     }
 
-    public static boolean checkUserData(ObjectData objectDataRecive, User user){
-        if(objectDataRecive.getSessionNumber().equals("00000")){
+    public static boolean checkUserData(ObjectData objectDataRecive, UserData userData){
+        if(objectDataRecive.getUserData().getSessionNumber().equals("00000")){
 
             return false;
-        }else if(user.checkEqualsSesion(objectDataRecive.getSesionToken())){
+        }else if(userData.checkEqualsSesion(objectDataRecive.getUserData().getSessionToken())){
             System.out.println("Dobry");
             return true;
         }

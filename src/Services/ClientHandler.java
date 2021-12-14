@@ -1,7 +1,7 @@
 package Services;
 
 import Objects.ObjectData;
-import Objects.User;
+import Objects.UserData;
 import Repositories.UserRepository;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class ClientHandler extends Thread {
 
     private ObjectData objectDataRecive;
 
-    private User user;
+    private UserData userData;
 
     private String sessionNumber, sessionToken;
 
@@ -35,14 +35,14 @@ public class ClientHandler extends Thread {
     @Override
     public void run(){
 
-        user = new User();
-        if (user.getSesionNumber().contains("00000")) {
+        userData = new UserData();
+        if (userData.getSessionNumber().contains("00000")) {
             while(true) {
                 boolean checkGenerator = UserRepository.getInstance().searchEquals(sessionNumber = SessionGenerator.getSesionNumber());
                 if(!checkGenerator){
                    // user.setSesionToken(SessionGenerator.getSessionToken());;
-                    user.setSesionNumber(sessionNumber);
-                    UserRepository.getInstance().addUser(sessionNumber,user);
+                    userData.setSessionNumber(sessionNumber);
+                    UserRepository.getInstance().addUser(sessionNumber, userData);
                     break;
                 }
             }
@@ -53,7 +53,7 @@ public class ClientHandler extends Thread {
         while(true){
             i++;
            CommunicationServices.recive(objectIn,UserRepository.getInstance().getUser(sessionNumber));
-           CommandManager.manage(user);
+           CommandManager.manage(userData);
             //ManagerLast.decision(UserRepository.getInstance().getUser(sessionNumber));
 
             System.out.println(i);
