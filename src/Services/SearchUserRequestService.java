@@ -17,6 +17,7 @@ public class SearchUserRequestService implements RequestStrategy {
 
     @Override
     public ObjectData processObjectData(UserData userData, ObjectData objectData) {
+
         ObjectData objectDataSend = new ObjectData();
         UserData sendUserData = new UserData();
         UserData searchUser = new UserData();
