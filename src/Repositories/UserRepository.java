@@ -52,7 +52,7 @@ public class UserRepository {
             return false;
         }
     }
-
+/*
     public UserData searchUser(ObjectData object) {
         String username = object.getMessageObject().getToMessage();
         if (!userList.isEmpty()) {
@@ -67,7 +67,7 @@ public class UserRepository {
         }
         return null;
     }
-
+*/
     public void updateUser (UserData userData) {
         UserData u1 = userList.get(userData.getSessionNumber());
         System.out.println(u1.getUsername());

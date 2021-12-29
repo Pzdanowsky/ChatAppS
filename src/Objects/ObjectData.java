@@ -3,7 +3,7 @@ package Objects;
 import java.io.File;
 import java.io.Serializable;
 
-public class ObjectData implements Serializable {
+public class ObjectData<prviate, Chat> implements Serializable {
 
     public static final long serialVersionUID = 1L;
     private boolean authenticated;
@@ -13,7 +13,16 @@ public class ObjectData implements Serializable {
     private FileObject fileObject;
     private UserData userData;
     private UserData userDataDestintion;
+    private Objects.Chat chatRoom;
 
+
+    public Objects.Chat getChatRoom() {
+        return chatRoom;
+    }
+
+    public void setChatRoom(Objects.Chat chatRoom) {
+        this.chatRoom = chatRoom;
+    }
 
     public ObjectData() {
     }
@@ -75,4 +84,6 @@ public class ObjectData implements Serializable {
     public void setUserDataDestintion(UserData userDataDestintion) {
         this.userDataDestintion = userDataDestintion;
     }
+
+
 }

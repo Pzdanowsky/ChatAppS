@@ -50,7 +50,7 @@ public class CommandManager {
                     break;
 
                 case "01000":
-                    // Tworzenie chatu
+                    strategy = new CreateChatService();
                     break;
 
                 case "01001":

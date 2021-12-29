@@ -7,7 +7,6 @@ public class MessageObject implements Serializable {
     private int id;
     private int idChatRoom;
     private String fromMessage;
-    private String toMessage;
     private String data;
 
 
@@ -17,7 +16,7 @@ public class MessageObject implements Serializable {
 
     public MessageObject(String from, String to, String data){
         this.fromMessage = from;
-        this.toMessage = to;
+
         this.data = data;
     }
 
@@ -37,13 +36,6 @@ public class MessageObject implements Serializable {
         this.fromMessage = fromMessage;
     }
 
-    public String getToMessage() {
-        return toMessage;
-    }
-
-    public void setToMessage(String toMessage) {
-        this.toMessage = toMessage;
-    }
 
     public String getData() {
         return data;
