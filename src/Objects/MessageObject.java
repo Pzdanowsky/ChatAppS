@@ -14,7 +14,7 @@ public class MessageObject implements Serializable {
 
     }
 
-    public MessageObject(String from, String to, String data){
+    public MessageObject(String from, String data){
         this.fromMessage = from;
 
         this.data = data;

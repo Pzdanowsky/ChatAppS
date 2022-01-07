@@ -46,7 +46,7 @@ public class CommandManager {
                     break;
 
                 case "00111":
-                    // Wysyłanie pliku
+                    strategy = new SendMessageRequestService();
                     break;
 
                 case "01000":
