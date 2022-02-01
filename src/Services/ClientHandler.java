@@ -17,10 +17,6 @@ public class ClientHandler extends Thread {
 
     private ObjectInputStream objectIn;
 
-    private ObjectData objectDataSend;
-
-    private ObjectData objectDataRecive;
-
     private UserData userData;
 
     private String sessionNumber, sessionToken;
@@ -49,14 +45,12 @@ public class ClientHandler extends Thread {
         }
         ComClientService con = new ComClientService(objectIn,objectOut,sessionNumber,clientSocket);
         con.start();
-        int i=0;
+
         while(true){
-            i++;
+
            CommunicationServices.recive(objectIn,UserRepository.getInstance().getUser(sessionNumber));
            CommandManager.manage(userData);
-            //ManagerLast.decision(UserRepository.getInstance().getUser(sessionNumber));
 
-            System.out.println(i);
         }
 
 

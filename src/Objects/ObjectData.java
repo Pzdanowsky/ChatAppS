@@ -3,8 +3,11 @@ package Objects;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ObjectData<prviate, Chat> implements Serializable {
+import Objects.Chat;
+
+public class ObjectData implements Serializable {
 
     public static final long serialVersionUID = 1L;
     private boolean authenticated;
@@ -14,21 +17,13 @@ public class ObjectData<prviate, Chat> implements Serializable {
     private FileObject fileObject;
     private UserData userData;
     private UserData userDataDestintion;
-    private ArrayList<Objects.Chat> userChatsList;
-
-
+    private List<Chat> chatRoomList;
 
     public ObjectData() {
+        chatRoomList = new ArrayList<>();
     }
 
 
-    public ArrayList<Objects.Chat> getUserChatsList() {
-        return userChatsList;
-    }
-
-    public void setUserChatsList(ArrayList<Objects.Chat> userChatsList) {
-        this.userChatsList = userChatsList;
-    }
 
     public String getCommand() {
         return command;
@@ -86,6 +81,19 @@ public class ObjectData<prviate, Chat> implements Serializable {
     public void setUserDataDestintion(UserData userDataDestintion) {
         this.userDataDestintion = userDataDestintion;
     }
+
+    public void setChatRoomList(List<Chat> chatRoomList) {
+        this.chatRoomList = chatRoomList;
+    }
+
+    public List<Chat> getChatRoomList(){
+        return this.chatRoomList;
+    }
+
+    public void addChatToList(Chat chaRoom){
+        this.chatRoomList.add(chaRoom);
+    }
+
 
 
 }

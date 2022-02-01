@@ -1,7 +1,10 @@
-package Services;
+package Services.ReqStrategy;
 
 import Objects.ObjectData;
 import Objects.UserData;
+import Services.DatabaseConnectionService;
+import Services.RequestStrategy;
+import Services.SessionGenerator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,7 +65,7 @@ public class LoginRequestService implements RequestStrategy {
             System.out.println("Dane do logowana sa puste");
         }
 
-
+        System.out.println("Logowanie ID: "+objectDataSend.getUserData().getUserID());
         return objectDataSend;
     }
 }

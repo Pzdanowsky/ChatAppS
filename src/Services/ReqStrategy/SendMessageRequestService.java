@@ -1,8 +1,10 @@
-package Services;
+package Services.ReqStrategy;
 
 import Objects.Chat;
 import Objects.ObjectData;
 import Objects.UserData;
+import Services.DatabaseConnectionService;
+import Services.RequestStrategy;
 
 import java.sql.*;
 
@@ -33,7 +35,7 @@ public class SendMessageRequestService implements RequestStrategy {
 
                 pstat.setInt(1, objectData.getMessageObject().getIdChatRoom());
                 pstat.setInt(2, objectData.getUserData().getUserID());
-                pstat.setString(3, objectData.getMessageObject().getData());
+                pstat.setString(3, objectData.getMessageObject().getContent());
                 pstat.setString(4, "text");
 
                 pstat.executeUpdate();
@@ -42,13 +44,8 @@ public class SendMessageRequestService implements RequestStrategy {
                     objectData.getMessageObject().setId(myRs.getInt(1));
                     objectDataSend.setMessageObject(objectData.getMessageObject());
                     objectDataSend.setUserData(objectData.getUserData());
-
                 }
-
                 pstat.clearParameters();
-
-
-
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

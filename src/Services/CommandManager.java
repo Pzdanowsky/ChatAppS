@@ -4,6 +4,7 @@ import Objects.ObjectData;
 import Objects.UserData;
 import Repositories.DataReciveRepository;
 import Repositories.DataSendRepository;
+import Services.ReqStrategy.*;
 
 public class CommandManager {
 
@@ -22,7 +23,6 @@ public class CommandManager {
 
                 case "00001":
                    strategy = new LoginRequestService();
-                    System.out.println("Logowanie");
                     break;
 
                 case "00010":
@@ -38,7 +38,7 @@ public class CommandManager {
                     break;
 
                 case "00101":
-                    // Lista znajomych - sprawdzanie aktywnosci
+                    strategy = new GetUserContactList();
                     break;
 
                 case "00110":
@@ -54,7 +54,7 @@ public class CommandManager {
                     break;
 
                 case "01001":
-                    //Pobranie wiadomości dla czatu
+                    strategy = new GetMessageList();
                     break;
 
                 case "01010":
