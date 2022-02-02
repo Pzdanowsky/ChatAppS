@@ -14,12 +14,15 @@ public class SendMessageRequestService implements RequestStrategy {
 
     private static ResultSet myRs;
 
+    private static ResultSet myRs2;
+
     private static Connection myConn;
 
     @Override
     public ObjectData processObjectData(UserData userData, ObjectData objectData) {
         ObjectData objectDataSend = new ObjectData();
         UserData sendUserData = new UserData();
+
 
 
         objectDataSend.setCommand("00111");
@@ -44,15 +47,22 @@ public class SendMessageRequestService implements RequestStrategy {
                 myRs = pstat.getGeneratedKeys();
 
                 if(myRs.next()){
+                    pstat.clearParameters();
                     objectData.getMessageObject().setId(myRs.getInt(1));
-                    objectDataSend.setMessageObject(objectData.getMessageObject());
-                    objectDataSend.setUserData(objectData.getUserData());
-                    RequestStrategy s = new MessageRequestService();
-                    s.processObjectData(userData, objectData);
-
+                    pstat = myConn.prepareStatement("SELECT created FROM messages WHERE messageID = ?");
+                    pstat.setInt(1,objectData.getMessageObject().getId());
+                    myRs2 = pstat.executeQuery();
+                    if(myRs2.next()) {
+                        objectData.getMessageObject().setCreated(myRs2.getTimestamp(1));
+                        objectDataSend.setMessageObject(objectData.getMessageObject());
+                        objectDataSend.setUserData(objectData.getUserData());
+                        objectDataSend.getUserData().setSessionNumber(userData.getSessionNumber());
+                        RequestStrategy s = new MessageRequestService();
+                        s.processObjectData(userData, objectData);
+                    }
 
                 }
-                pstat.clearParameters();
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

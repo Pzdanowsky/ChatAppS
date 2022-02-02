@@ -32,7 +32,7 @@ public class CommunicationServices {
             }
 
         } catch (ClassNotFoundException | IOException ex) {
-            System.out.println("Bład odbioru: " + clientSocket.getLocalPort());
+            System.out.println("Bład odbioru: "+clientSocket.isClosed());
         }
 
     }

@@ -26,7 +26,7 @@ public class GetMessageList implements RequestStrategy {
             myConn = DatabaseConnectionService.getConn();
 
             try {
-                PreparedStatement pstat = myConn.prepareStatement("SELECT messageID, chatID, authorID, content FROM messages WHERE chatID = ? LIMIT 10", ResultSet.TYPE_SCROLL_SENSITIVE,
+                PreparedStatement pstat = myConn.prepareStatement("SELECT messageID, chatID, authorID, content, created FROM messages WHERE chatID = ? ORDER BY created DESC LIMIT 10", ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
                 pstat.setInt(1,objectData.getChatRoomList().get(0).getChatID() );
 
@@ -52,6 +52,7 @@ public class GetMessageList implements RequestStrategy {
                         msg.setIdChatRoom(myRs.getInt(2));
                         msg.setAuthorId(myRs.getInt(3));
                         msg.setContent(myRs.getString(4));
+                        msg.setCreated(myRs.getTimestamp(5));
                         chat.addMessage(msg);
                         myRs.next();
                     }

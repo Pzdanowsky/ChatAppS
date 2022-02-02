@@ -1,6 +1,8 @@
 package Objects;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MessageObject implements Serializable {
 
@@ -8,6 +10,7 @@ public class MessageObject implements Serializable {
     private int idChatRoom;
     private int authorId;
     private String content;
+    private Timestamp created;
 
 
     public MessageObject(){
@@ -57,5 +60,13 @@ public class MessageObject implements Serializable {
 
     public void setContent(String context) {
         this.content = context;
+    }
+
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
     }
 }
