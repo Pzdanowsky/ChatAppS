@@ -41,7 +41,7 @@ public class GetUserContactList implements RequestStrategy {
 
 
                 }else{
-                    System.out.println("Znaleziono czaty dla ID "+objectData.getUserData().getUserID());
+                   // System.out.println("Znaleziono czaty dla ID "+objectData.getUserData().getUserID());
                     ResultSetMetaData rms = myRs.getMetaData();
                     myRs.last();
                     int ResultSize = myRs.getRow();

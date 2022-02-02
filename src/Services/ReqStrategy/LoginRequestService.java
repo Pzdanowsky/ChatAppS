@@ -2,6 +2,7 @@ package Services.ReqStrategy;
 
 import Objects.ObjectData;
 import Objects.UserData;
+import Repositories.UserRepository;
 import Services.DatabaseConnectionService;
 import Services.RequestStrategy;
 import Services.SessionGenerator;
@@ -49,6 +50,7 @@ public class LoginRequestService implements RequestStrategy {
                 if(!myRs.next()){
                     objectDataSend.setAuthenticated(false);
                     System.out.println("Błedne dane");
+                    objectDataSend.setUserData(sendUserData);
                 }else{
                     userData.setUsername(objectData.getUserData().getUsername());
                     sendUserData.setUsername(userData.getUsername());
@@ -56,6 +58,8 @@ public class LoginRequestService implements RequestStrategy {
                     objectDataSend.setAuthenticated(true);
                     sendUserData.setUserID(myRs.getInt(1));
                     objectDataSend.setUserData(sendUserData);
+                    UserRepository.getInstance().getUser(userData.getSessionNumber()).setUserID(sendUserData.getUserID());
+                    UserRepository.getInstance().getUser(userData.getSessionNumber()).setUsername(userData.getUsername());
 
 
                     pstat.clearParameters();
@@ -74,7 +78,6 @@ public class LoginRequestService implements RequestStrategy {
             System.out.println("Dane do logowana sa puste");
         }
 
-        System.out.println("Logowanie ID: "+objectDataSend.getUserData().getUserID());
         return objectDataSend;
     }
 }

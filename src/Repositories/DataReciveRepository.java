@@ -25,7 +25,6 @@ public class DataReciveRepository {
    }
 
    public void addDataRecive(ObjectData objectDataRecive){
-       System.out.println("odebralem"+objectDataRecive.getCommand());
         reciveList.put(objectDataRecive.getUserData().getSessionNumber(),objectDataRecive);
    }
 

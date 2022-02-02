@@ -47,9 +47,8 @@ public class SendMessageRequestService implements RequestStrategy {
                     objectData.getMessageObject().setId(myRs.getInt(1));
                     objectDataSend.setMessageObject(objectData.getMessageObject());
                     objectDataSend.setUserData(objectData.getUserData());
-                    System.out.println("Wiadomość 1");
                     RequestStrategy s = new MessageRequestService();
-                    DataSendRepository.getInstance().addDataSend(s.processObjectData(userData, objectData));
+                    s.processObjectData(userData, objectData);
 
 
                 }

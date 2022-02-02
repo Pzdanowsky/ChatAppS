@@ -54,12 +54,17 @@ public class UserRepository {
     }
 
     public UserData searchEqualsId(int id){
+        UserData user = null;
+       String a = Integer.toString(id);
         for (Map.Entry<String, UserData> users : userList.entrySet()) {
-            if(users.getKey().equals(id)){
-                return users.getValue();
+
+            if(users.getValue().getUserID() == id){
+                System.out.println(users.getValue().getUserID());
+                user = users.getValue();
+                
             }
         }
-        return null;
+        return user;
     }
 /*
     public UserData searchUser(ObjectData object) {

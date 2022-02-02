@@ -56,7 +56,6 @@ public class GetMessageList implements RequestStrategy {
                         myRs.next();
                     }
                     int sizetab = chat.getMessageChatList().size();
-                    System.out.println("Znaleziono: "+sizetab+" wiadomośi dla ID "+objectData.getChatRoomList().get(0).getChatID());
 
                     objectDataSend.addChatToList(chat);
                 }
