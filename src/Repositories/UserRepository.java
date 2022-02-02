@@ -52,6 +52,15 @@ public class UserRepository {
             return false;
         }
     }
+
+    public UserData searchEqualsId(int id){
+        for (Map.Entry<String, UserData> users : userList.entrySet()) {
+            if(users.getKey().equals(id)){
+                return users.getValue();
+            }
+        }
+        return null;
+    }
 /*
     public UserData searchUser(ObjectData object) {
         String username = object.getMessageObject().getToMessage();

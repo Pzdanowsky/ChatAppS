@@ -3,6 +3,8 @@ package Services.ReqStrategy;
 import Objects.Chat;
 import Objects.ObjectData;
 import Objects.UserData;
+import Repositories.DataSendRepository;
+import Services.CommandManager;
 import Services.DatabaseConnectionService;
 import Services.RequestStrategy;
 
@@ -25,7 +27,7 @@ public class SendMessageRequestService implements RequestStrategy {
             System.out.println("Pusty obiekt");
 
         } else if (!objectData.getMessageObject().equals(null)) {
-            System.out.println("Wiadomość");
+
 
             myConn = DatabaseConnectionService.getConn();
 
@@ -37,13 +39,19 @@ public class SendMessageRequestService implements RequestStrategy {
                 pstat.setInt(2, objectData.getUserData().getUserID());
                 pstat.setString(3, objectData.getMessageObject().getContent());
                 pstat.setString(4, "text");
-
                 pstat.executeUpdate();
+
                 myRs = pstat.getGeneratedKeys();
+
                 if(myRs.next()){
                     objectData.getMessageObject().setId(myRs.getInt(1));
                     objectDataSend.setMessageObject(objectData.getMessageObject());
                     objectDataSend.setUserData(objectData.getUserData());
+                    System.out.println("Wiadomość 1");
+                    RequestStrategy s = new MessageRequestService();
+                    DataSendRepository.getInstance().addDataSend(s.processObjectData(userData, objectData));
+
+
                 }
                 pstat.clearParameters();
             } catch (SQLException ex) {

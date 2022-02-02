@@ -7,6 +7,9 @@ import Repositories.DataSendRepository;
 
 import java.io.*;
 import java.net.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class CommunicationServices {
 
@@ -16,26 +19,19 @@ public class CommunicationServices {
    private static int i = 0;
 
 
-    public static void recive(ObjectInputStream objectIn, UserData userData) {
+    public static void recive(ObjectInputStream objectIn, UserData userData) throws SQLException {
 
         try {
             objectDataRecive = (ObjectData) objectIn.readObject();
              if(objectDataRecive !=null) {
 
                  objectDataRecive.getUserData().setSessionNumber(userData.getSessionNumber());
-                   // objectDataRecive.setSesionToken(user.getSesionToken());
-                    //user.setUsername(objectDataRecive.getUsername());
-                   //Repositories.UserRepository.getInstance().updateUser(user);
-
-
                 DataReciveRepository.getInstance().addDataRecive(objectDataRecive);
                 objectDataRecive = null;
-
 
             }
 
         } catch (ClassNotFoundException | IOException ex) {
-            ex.printStackTrace();
             System.out.println("Bład odbioru: " + clientSocket.getLocalPort());
         }
 

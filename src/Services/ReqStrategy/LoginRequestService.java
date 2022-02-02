@@ -56,6 +56,15 @@ public class LoginRequestService implements RequestStrategy {
                     objectDataSend.setAuthenticated(true);
                     sendUserData.setUserID(myRs.getInt(1));
                     objectDataSend.setUserData(sendUserData);
+
+
+                    pstat.clearParameters();
+                    pstat = myConn.prepareStatement("UPDATE users SET isActive = 1 WHERE userID = ?");
+                    pstat.setInt(1,sendUserData.getUserID());
+                    pstat.executeUpdate();
+
+
+
                 }
 
             }catch (SQLException ex){

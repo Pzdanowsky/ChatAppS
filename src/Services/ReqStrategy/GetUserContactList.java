@@ -52,7 +52,6 @@ public class GetUserContactList implements RequestStrategy {
                         myRs.next();
                     }
 
-
                 }
 
 

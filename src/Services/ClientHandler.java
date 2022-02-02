@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class ClientHandler extends Thread {
 
@@ -48,8 +49,12 @@ public class ClientHandler extends Thread {
 
         while(true){
 
-           CommunicationServices.recive(objectIn,UserRepository.getInstance().getUser(sessionNumber));
-           CommandManager.manage(userData);
+            try {
+                CommunicationServices.recive(objectIn,UserRepository.getInstance().getUser(sessionNumber));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            CommandManager.manage(userData);
 
         }
 

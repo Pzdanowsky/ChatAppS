@@ -24,7 +24,9 @@ public class DataSendRepository {
     }
 
     public void addDataSend(ObjectData objectDataSend) {
-        sendList.put(objectDataSend.getUserData().getSessionNumber(), objectDataSend);
+        if(objectDataSend != null) {
+            sendList.put(objectDataSend.getUserData().getSessionNumber(), objectDataSend);
+        }
     }
 
     public ObjectData getObjectData(String sessionNumber) {

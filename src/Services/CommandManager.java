@@ -34,7 +34,7 @@ public class CommandManager {
                     break;
 
                 case "00100":
-                 //   strategy = new MessageRequestService();
+                   strategy = new CloseConnectionProgram();
                     break;
 
                 case "00101":
