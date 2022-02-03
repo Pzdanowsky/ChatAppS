@@ -1,9 +1,10 @@
-package Services;
+package Services.ReqStrategy;
 
 import Objects.ObjectData;
 import Objects.UserData;
 import Repositories.DataSendRepository;
 import Repositories.UserRepository;
+import Services.RequestStrategy;
 
 public class AddChatByOtherUser implements RequestStrategy {
     @Override
@@ -17,8 +18,6 @@ public class AddChatByOtherUser implements RequestStrategy {
                     .getInstance().searchEqualsId(objectData.getUserDataDestintion()
                             .getUserID()).getSessionNumber());
 
-
-            DataSendRepository.getInstance().addDataSend(objectData);
 
 
         }

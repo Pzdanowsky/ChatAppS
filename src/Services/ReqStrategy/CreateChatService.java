@@ -4,7 +4,6 @@ import Objects.Chat;
 import Objects.ObjectData;
 import Objects.UserData;
 import Repositories.DataSendRepository;
-import Services.AddChatByOtherUser;
 import Services.DatabaseConnectionService;
 import Services.RequestStrategy;
 
@@ -108,16 +107,20 @@ public class CreateChatService implements RequestStrategy {
 
                             objectDataSend.setUserDataDestintion(searchUser);
                             objectDataSend.addChatToList(chatRoom);
+                            objectData = objectDataSend;
                             RequestStrategy rs = new AddChatByOtherUser();
-                            DataSendRepository.getInstance().addDataSend(rs.processObjectData(userData,objectDataSend));
+                            DataSendRepository.getInstance().addDataSend(rs.processObjectData(userData,objectData));
 
 
                         } else {
                             objectDataSend.getUserData().setUserID(0);
+                            System.out.println("Pomylka");
                         }
                     } else {
                         System.out.println("Jest juz taki pokoj czatu");
                     }
+                }else{
+                    System.out.println("Jest juz taki pokoj czatu");
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -125,6 +128,7 @@ public class CreateChatService implements RequestStrategy {
 
 
         }
+
         return objectDataSend;
     }
 }
