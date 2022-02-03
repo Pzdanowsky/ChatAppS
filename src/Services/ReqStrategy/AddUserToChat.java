@@ -1,8 +1,10 @@
-package Services;
+package Services.ReqStrategy;
 
 import Objects.ObjectData;
 import Objects.UserData;
+import Services.DatabaseConnectionService;
 import Services.ReqStrategy.AddChatByOtherUser;
+import Services.RequestStrategy;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +21,6 @@ public class AddUserToChat implements RequestStrategy {
     public ObjectData processObjectData(UserData userData, ObjectData objectData) {
 
         UserData userDest = objectData.getUserDataDestintion();
-        System.out.println("Mam uzytkownik: " + objectData.getUserDataDestintion().getUsername() + " do czatu: " + objectData.getChatRoomList().get(0).getChatID());
 
         if (objectData == null) {
             System.out.println("Pusty obiekt");
@@ -32,7 +33,7 @@ public class AddUserToChat implements RequestStrategy {
 
             PreparedStatement pstat = null;
             try {
-                pstat = myConn.prepareStatement("SELECT userID FROM users WHERE username = ?");
+                pstat = myConn.prepareStatement("SELECT userID FROM users WHERE login = ?");
                 pstat.setString(1,objectData.getUserDataDestintion().getUsername());
                 myRs = pstat.executeQuery();
 
@@ -58,6 +59,7 @@ public class AddUserToChat implements RequestStrategy {
                                 pstat = myConn.prepareStatement("INSERT INTO chat_user (userID,chatID) VALUES (?,?);");
                                 pstat.setInt(1,userDest.getUserID());
                                 pstat.setInt(2,objectData.getChatRoomList().get(0).getChatID());
+                                pstat.executeUpdate();
                                 RequestStrategy rs = new AddChatByOtherUser();
                                 objectData.setUserData(userDest);
                                 rs.processObjectData(userDest,objectData);
