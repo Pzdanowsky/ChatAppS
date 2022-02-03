@@ -58,7 +58,7 @@ public class CommandManager {
                     break;
 
                 case "01010":
-                    //Pobranie pliku
+                    strategy = new AddUserToChat();
                     break;
 
                 case "01011":
