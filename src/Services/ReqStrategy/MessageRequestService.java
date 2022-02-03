@@ -67,7 +67,7 @@ public class MessageRequestService implements RequestStrategy {
                                objectDataSend.setUserData(UserRepository.getInstance().searchEqualsId(myRs.getInt(1)));
                                objectDataSend.setMessageObject(objectData.getMessageObject());
                                DataSendRepository.getInstance().addDataSend(objectDataSend);
-                               System.out.println("Poszło ");
+                               System.out.println("Poszło " + objectDataSend.getUserData().getUsername());
                             }
                    }
                     myRs.next();

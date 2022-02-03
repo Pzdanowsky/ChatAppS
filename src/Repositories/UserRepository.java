@@ -59,7 +59,6 @@ public class UserRepository {
         for (Map.Entry<String, UserData> users : userList.entrySet()) {
 
             if(users.getValue().getUserID() == id){
-                System.out.println(users.getValue().getUserID());
                 user = users.getValue();
                 
             }
