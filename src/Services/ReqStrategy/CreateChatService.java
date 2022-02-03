@@ -3,6 +3,8 @@ package Services.ReqStrategy;
 import Objects.Chat;
 import Objects.ObjectData;
 import Objects.UserData;
+import Repositories.DataSendRepository;
+import Services.AddChatByOtherUser;
 import Services.DatabaseConnectionService;
 import Services.RequestStrategy;
 
@@ -36,68 +38,87 @@ public class CreateChatService implements RequestStrategy {
             myConn = DatabaseConnectionService.getConn();
 
             try {
+
+
+
+
                 PreparedStatement pstat = myConn.prepareStatement("SELECT chatID FROM chat WHERE chatName = ?");
                 String chat_name = objectData.getUserData().getUsername()+"_"+objectData.getUserDataDestintion().getUsername();
                 pstat.setString(1,chat_name);
                 myRs = pstat.executeQuery();
 
+
+
                 if(!myRs.next()) {
 
-                    pstat = myConn.prepareStatement("INSERT INTO chat (chatID,chatName, createAt) VALUES (NULL,?, current_timestamp()); ");
-
-                    pstat.setString(1, chat_name);
-                    pstat.executeUpdate();
-
-                    pstat.clearParameters();
-                    pstat = myConn.prepareStatement("SELECT chatID FROM chat WHERE chatName =?");
-                    pstat.setString(1, chat_name);
-
+                    pstat = myConn.prepareStatement("SELECT chatID FROM chat WHERE chatName = ?");
+                    String chat_name2 = objectData.getUserDataDestintion().getUsername() + "_" + objectData.getUserData().getUsername();
+                    pstat.setString(1, chat_name2);
                     myRs = pstat.executeQuery();
 
+                    if (!myRs.next()) {
 
-                    if (myRs.next()) {
-                        System.out.println("Otworzono pokoj czatu" + myRs.getInt(1));
-                        int chatID = myRs.getInt(1);
-                        objectDataSend.getUserData().setUserID(myRs.getInt(1));
-                        objectDataSend.getUserData().setUsername(objectData.getUserData().getUsername());
+                        pstat = myConn.prepareStatement("INSERT INTO chat (chatID,chatName, createAt) VALUES (NULL,?, current_timestamp()); ");
 
-                        chatRoom.setChatID(chatID);
+                        pstat.setString(1, chat_name);
+                        pstat.executeUpdate();
+
                         pstat.clearParameters();
-                        pstat = myConn.prepareStatement("SELECT userID FROM users WHERE login =?");
-                        pstat.setString(1, objectData.getUserDataDestintion().getUsername());
-                        int userId = 0;
+                        pstat = myConn.prepareStatement("SELECT chatID FROM chat WHERE chatName =?");
+                        pstat.setString(1, chat_name);
+
                         myRs = pstat.executeQuery();
+
+
                         if (myRs.next()) {
+                            System.out.println("Otworzono pokoj czatu" + myRs.getInt(1));
+                            int chatID = myRs.getInt(1);
+                            objectDataSend.getUserData().setUserID(myRs.getInt(1));
+                            objectDataSend.getUserData().setUsername(objectData.getUserData().getUsername());
 
-                            userId = myRs.getInt(1);
+                            chatRoom.setChatID(chatID);
+                            pstat.clearParameters();
+                            pstat = myConn.prepareStatement("SELECT userID FROM users WHERE login =?");
+                            pstat.setString(1, objectData.getUserDataDestintion().getUsername());
+                            int userId = 0;
+                            myRs = pstat.executeQuery();
+                            if (myRs.next()) {
+
+                                userId = myRs.getInt(1);
+                               searchUser.setUserID(userId);
+                               searchUser.setUsername(objectData.getUserDataDestintion().getUsername());
+                            } else {
+                                System.out.println("nima");
+                            }
+                            pstat.clearParameters();
+                            pstat = myConn.prepareStatement("INSERT INTO chat_user (userID,chatID) VALUES (?,?); ");
+                            pstat.setInt(1, objectData.getUserData().getUserID());
+                            pstat.setInt(2, chatID);
+                            pstat.executeUpdate();
+                            chatRoom.addUser(objectData.getUserData().getUserID());
+
+                            pstat.clearParameters();
+                            pstat = myConn.prepareStatement("INSERT INTO chat_user (userID,chatID) VALUES (?,?); ");
+                            pstat.setInt(1, userId);
+                            pstat.setInt(2, chatID);
+                            pstat.executeUpdate();
+                            chatRoom.addUser(userId);
+
+
+
+                            objectDataSend.setUserDataDestintion(searchUser);
+                            objectDataSend.addChatToList(chatRoom);
+                            RequestStrategy rs = new AddChatByOtherUser();
+                            DataSendRepository.getInstance().addDataSend(rs.processObjectData(userData,objectDataSend));
+
+
                         } else {
-                            System.out.println("nima");
+                            objectDataSend.getUserData().setUserID(0);
                         }
-                        pstat.clearParameters();
-                        pstat = myConn.prepareStatement("INSERT INTO chat_user (userID,chatID) VALUES (?,?); ");
-                        pstat.setInt(1, objectData.getUserData().getUserID());
-                        pstat.setInt(2, chatID);
-                        pstat.executeUpdate();
-                        chatRoom.addUser(objectData.getUserData().getUserID());
-
-                        pstat.clearParameters();
-                        pstat = myConn.prepareStatement("INSERT INTO chat_user (userID,chatID) VALUES (?,?); ");
-                        pstat.setInt(1, userId);
-                        pstat.setInt(2, chatID);
-                        pstat.executeUpdate();
-                        chatRoom.addUser(userId);
-
-
-                        objectDataSend.addChatToList(chatRoom);
-
                     } else {
-                        objectDataSend.getUserData().setUserID(0);
+                        System.out.println("Jest juz taki pokoj czatu");
                     }
-                }else
-                {
-                    System.out.println("Jest juz taki pokoj czatu");
                 }
-
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

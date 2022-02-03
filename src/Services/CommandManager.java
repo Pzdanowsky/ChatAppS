@@ -62,7 +62,7 @@ public class CommandManager {
                     break;
 
                 case "01011":
-                    //Pobranie starszy wiadomości
+                    strategy = new AddChatByOtherUser();
                     break;
 
                 case "01100":

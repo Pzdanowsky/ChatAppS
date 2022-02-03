@@ -31,6 +31,7 @@ public class GetUserContactList implements RequestStrategy {
             try {
                 PreparedStatement pstat = myConn.prepareStatement("SELECT chatID FROM chat_user WHERE userID = ?", ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
+
                 pstat.setInt(1,objectData.getUserData().getUserID() );
 
                 myRs = pstat.executeQuery();
@@ -41,12 +42,13 @@ public class GetUserContactList implements RequestStrategy {
 
 
                 }else{
-                   // System.out.println("Znaleziono czaty dla ID "+objectData.getUserData().getUserID());
+
                     ResultSetMetaData rms = myRs.getMetaData();
                     myRs.last();
                     int ResultSize = myRs.getRow();
                     myRs.beforeFirst();
                     myRs.next();
+                    System.out.println("Znaleziono :" +ResultSize);
                     for(int i = 1; i <= ResultSize; i++){
                         objectDataSend.addChatToList(new Chat(myRs.getInt(1)));
                         myRs.next();
